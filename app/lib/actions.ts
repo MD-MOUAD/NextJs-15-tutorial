@@ -33,6 +33,7 @@ export const createInvoice = async (formData: FormData) => {
     };
   }
   expirePath("/dashboard/invoices");
+  expirePath("/");
   redirect("/dashboard/invoices");
 
   // redirect works by throwing an error, which would be caught by the catch block. To avoid this, call redirect after try/catch
@@ -58,6 +59,7 @@ export const updateInvoice = async (id: string, formData: FormData) => {
     return { message: "Database Error: Failed to Update Invoice." };
   }
   expirePath("/dashboard/invoices");
+  expirePath("/");
   redirect("/dashboard/invoices");
 };
 
@@ -65,6 +67,7 @@ export const deleteInvoice = async (id: string) => {
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     expirePath("/dashboard/invoices");
+    expirePath("/");
     return { message: "Deleted Invoice" };
   } catch (error) {
     console.log(error);
